@@ -1,0 +1,16 @@
+---
+services:
+  terraria:
+    image: indifferentbroccoli/terraria-server-docker
+    restart: unless-stopped
+    container_name: terraria
+    stop_grace_period: 30s
+    ports:
+      - '7777:7777/tcp'
+    environment:
+      PUID: 1000
+      PGID: 1000
+    env_file:
+      - .env.example
+    volumes:
+      - ./terraria:/terraria

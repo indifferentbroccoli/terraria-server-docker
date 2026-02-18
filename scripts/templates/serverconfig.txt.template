@@ -1,0 +1,16 @@
+world=/terraria/worlds/${WORLD_NAME}.wld
+worldname=${WORLD_NAME}
+autocreate=${AUTOCREATE}
+seed=${SEED}
+difficulty=${DIFFICULTY}
+maxplayers=${MAX_PLAYERS}
+port=${GAME_PORT}
+password=${SERVER_PASSWORD}
+motd=${MOTD}
+worldpath=/terraria/worlds
+banlist=/terraria/banlist.txt
+secure=${SECURE}
+language=${LANGUAGE}
+upnp=${UPNP}
+npcstream=${NPCSTREAM}
+priority=${PRIORITY}
