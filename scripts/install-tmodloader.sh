@@ -35,16 +35,16 @@ if ! unzip -q -o "${tmp_zip}" -d "${tmp_extract}"; then
     exit 1
 fi
 
-# Find the script
-server_script=$(find "${tmp_extract}" -name "start_tModLoaderServer.sh" | head -1)
+# Find the server start script
+server_script=$(find "${tmp_extract}" -name "start-tModLoaderServer.sh" | head -1)
 if [ -z "${server_script}" ]; then
-    LogError "Could not find start_tModLoaderServer.sh in the tModLoader zip"
+    LogError "Could not find start-tModLoaderServer.sh in the tModLoader zip"
     exit 1
 fi
 src_dir=$(dirname "${server_script}")
 LogInfo "Copying from: ${src_dir}"
 cp -rf "${src_dir}/." /terraria/
-chmod +x /terraria/start_tModLoaderServer.sh
+chmod +x /terraria/start-tModLoaderServer.sh
 
 mkdir -p /terraria/mods /terraria/worlds
 chown -R terraria:terraria /terraria

@@ -17,7 +17,7 @@ chown -R terraria:terraria /terraria
 
 LogAction "Starting server"
 if [ "${TMODLOADER_ENABLED:-false}" = "true" ]; then
-  su terraria -c "/terraria/start_tModLoaderServer.sh \
+  su terraria -c "/terraria/start-tModLoaderServer.sh \
     -server \
     -config /terraria/serverconfig.txt \
     -port ${GAME_PORT} \
