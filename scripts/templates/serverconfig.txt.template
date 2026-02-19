@@ -14,3 +14,4 @@ language=${LANGUAGE}
 upnp=${UPNP}
 npcstream=${NPCSTREAM}
 priority=${PRIORITY}
+modpath=/terraria/mods

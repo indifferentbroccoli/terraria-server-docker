@@ -7,6 +7,7 @@ config_file="/terraria/serverconfig.txt"
 mkdir -p /terraria/worlds || exit
 
 export MAX_PLAYERS=${MAX_PLAYERS:-8}
+export GAME_PORT=${GAME_PORT:-7777}
 export SERVER_PASSWORD=${SERVER_PASSWORD:-}
 export MOTD=${MOTD:-"Welcome to the server!"}
 export WORLD_NAME=${WORLD_NAME:-World}
