@@ -8,7 +8,7 @@ if [ -z "${WORKSHOP_MODS:-}" ]; then
 fi
 
 MODS_DIR="/terraria/mods"
-WORKSHOP_CONTENT="/root/Steam/steamapps/workshop/content/1281930"
+WORKSHOP_CONTENT="${HOME}/Steam/steamapps/workshop/content/1281930"
 ENABLED_JSON="${MODS_DIR}/enabled.json"
 
 mkdir -p "${MODS_DIR}"
