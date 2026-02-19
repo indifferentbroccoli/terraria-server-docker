@@ -84,10 +84,13 @@ shutdown_gracefully() {
   echo "Shutdown request received. Stopping server gracefully..."
 
   if [ -n "${SERVER_PID:-}" ] && kill -0 "${SERVER_PID}" 2>/dev/null; then
-    echo "exit" > /proc/${SERVER_PID}/fd/0
+    echo "save" > "${FIFO_PATH:-/tmp/terraria-stdin}"
+    sleep 3
+    echo "exit" > "${FIFO_PATH:-/tmp/terraria-stdin}"
     wait "${SERVER_PID}" 2>/dev/null
   fi
 
+  kill "${SLEEP_PID:-}" 2>/dev/null
   echo "Server stopped"
   exit 0
 }

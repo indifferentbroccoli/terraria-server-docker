@@ -29,8 +29,18 @@ else
     install
 fi
 
-/home/terraria/server/start.sh &
+FIFO_PATH=/tmp/terraria-stdin
+export FIFO_PATH
+mkfifo "$FIFO_PATH"
+
+# Keep FIFO open so the server never gets EOF on stdin
+sleep infinity > "$FIFO_PATH" &
+SLEEP_PID=$!
+export SLEEP_PID
+
+/home/terraria/server/start.sh < "$FIFO_PATH" &
 SERVER_PID=$!
+export SERVER_PID
 
 trap 'shutdown_gracefully' SIGTERM SIGINT
 
