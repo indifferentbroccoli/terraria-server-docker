@@ -12,6 +12,9 @@ elif [ "$GENERATE_SETTINGS" = "false" ]; then
   LogWarn "GENERATE_SETTINGS=false, not overwriting settings"
 fi
 
+# Ensure terraria user owns all data dirs (compile scripts run as root)
+chown -R terraria:terraria /terraria
+
 LogAction "Starting server"
 if [ "${TMODLOADER_ENABLED:-false}" = "true" ]; then
   su terraria -c "/terraria/start_tModLoaderServer.sh \
