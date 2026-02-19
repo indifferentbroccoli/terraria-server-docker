@@ -139,13 +139,3 @@ docker exec terraria /home/terraria/server/command.sh "say Hello everyone!"
 docker exec terraria /home/terraria/server/command.sh "kick PlayerName"
 docker exec terraria /home/terraria/server/command.sh "save"
 ```
-
-You can also attach to the console to **view** server output. Detach without stopping the server with `Ctrl+P` then `Ctrl+Q` — do not type commands here, use `command.sh` instead.
-
-```bash
-docker attach terraria
-```
-
-### Graceful shutdown
-
-`docker stop` will send a `save` + `exit` to the server before stopping the container, ensuring your world is saved.
