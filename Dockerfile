@@ -10,6 +10,7 @@ RUN dpkg --add-architecture i386 && \
     procps \
     libsdl2-2.0-0 \
     lib32gcc-s1 \
+    libicu70 \
     ca-certificates \
     && wget -q -O /tmp/steamcmd.tar.gz https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
     && mkdir -p /usr/local/steamcmd \
@@ -28,7 +29,6 @@ RUN useradd -m -s /bin/bash terraria
 ENV HOME=/home/terraria \
     GAME_PORT=7777 \
     SERVER_IP=0.0.0.0 \
-    GENERATE_SETTINGS=true \
     TERRARIA_VERSION=1450 \
     TMODLOADER_ENABLED=false \
     TMODLOADER_VERSION=latest \
@@ -45,7 +45,7 @@ RUN mkdir -p /terraria/worlds && \
 WORKDIR /home/terraria/server
 
 HEALTHCHECK --start-period=5m \
-            CMD pgrep -f "TerrariaServer\|tModLoaderServer" > /dev/null || exit 1
+            CMD pgrep -f "TerrariaServer\.bin\.x86_64\|dotnet" > /dev/null || exit 1
 
 EXPOSE 7777/tcp
 
