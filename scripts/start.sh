@@ -16,7 +16,7 @@ if [ "${TMODLOADER_ENABLED:-false}" = "true" ]; then
   Xvfb :99 -screen 0 1x1x8 &
   export DISPLAY=:99
   chmod +x /terraria/LaunchUtils/ScriptCaller.sh
-  su terraria -s /bin/bash -c "cd /terraria && DISPLAY=:99 ./LaunchUtils/ScriptCaller.sh -server -config /terraria/serverconfig.txt -tmlsavedirectory /terraria"
+  /terraria/LaunchUtils/ScriptCaller.sh -config /terraria/serverconfig.txt -tmlsavedirectory /terraria -server
 else
-  su terraria -s /bin/bash -c "/terraria/TerrariaServer.bin.x86_64 -config /terraria/serverconfig.txt"
+  /terraria/TerrariaServer.bin.x86_64 -config /terraria/serverconfig.txt
 fi
