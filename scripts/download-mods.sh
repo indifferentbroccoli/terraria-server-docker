@@ -44,8 +44,7 @@ for MOD_ID in "${MOD_IDS[@]}"; do
 
     mod_path="${WORKSHOP_CONTENT}/${MOD_ID}"
     if [ -d "${mod_path}" ]; then
-        newest_dir=$(ls -1 "${mod_path}" | sort -V | tail -1)
-        tmod_file=$(find "${mod_path}/${newest_dir}" -name "*.tmod" | head -1)
+        tmod_file=$(find "${mod_path}" -name "*.tmod" | sort -V | tail -1)
         if [ -n "${tmod_file}" ]; then
             cp -f "${tmod_file}" "${MODS_DIR}/"
             mod_name=$(basename "${tmod_file}" .tmod)
