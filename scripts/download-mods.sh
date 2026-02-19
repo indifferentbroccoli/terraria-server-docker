@@ -2,11 +2,6 @@
 # shellcheck source=scripts/functions.sh
 source "/home/terraria/server/functions.sh"
 
-if [ -z "${WORKSHOP_MODS:-}" ]; then
-    LogInfo "No workshop mods specified, skipping mod download"
-    exit 0
-fi
-
 MODS_DIR="/terraria/mods"
 WORKSHOP_CONTENT="${HOME}/Steam/steamapps/workshop/content/1281930"
 ENABLED_JSON="${MODS_DIR}/enabled.json"
@@ -19,6 +14,14 @@ if [ -f "${WORKSHOP_MANIFEST}" ]; then
     while IFS= read -r mod_name; do
         rm -f "${MODS_DIR}/${mod_name}.tmod"
     done < "${WORKSHOP_MANIFEST}"
+    rm -f "${WORKSHOP_MANIFEST}"
+fi
+
+if [ -z "${WORKSHOP_MODS:-}" ]; then
+    LogInfo "No workshop mods specified, skipping mod download"
+    echo "[]" > "${ENABLED_JSON}"
+    chown -R terraria:terraria "${MODS_DIR}"
+    exit 0
 fi
 
 IFS=',' read -ra MOD_IDS <<< "${WORKSHOP_MODS}"
@@ -54,21 +57,25 @@ done
 
 # Write enabled.json so tModLoader actually loads the mods
 LogAction "Writing enabled.json"
-printf '[\n'  > "${ENABLED_JSON}"
-for i in "${!enabled_mods[@]}"; do
-    if [ $i -lt $(( ${#enabled_mods[@]} - 1 )) ]; then
-        printf '  "%s",\n' "${enabled_mods[$i]}" >> "${ENABLED_JSON}"
-    else
-        printf '  "%s"\n'  "${enabled_mods[$i]}" >> "${ENABLED_JSON}"
-    fi
-done
-printf ']\n' >> "${ENABLED_JSON}"
+{
+    echo "["
+    for i in "${!enabled_mods[@]}"; do
+        if [ $i -lt $(( ${#enabled_mods[@]} - 1 )) ]; then
+            echo "  \"${enabled_mods[$i]}\","
+        else
+            echo "  \"${enabled_mods[$i]}\""
+        fi
+    done
+    echo "]"
+} > "${ENABLED_JSON}"
 
 LogInfo "enabled.json written with ${#enabled_mods[@]} mod(s):"
 cat "${ENABLED_JSON}"
 
-# Save manifest for potential cleanup
-printf '%s\n' "${enabled_mods[@]}" > "${WORKSHOP_MANIFEST}"
+# Save manifest of downloaded mods for cleanup on next run
+for mod_name in "${enabled_mods[@]}"; do
+    echo "${mod_name}"
+done > "${WORKSHOP_MANIFEST}"
 
 chown -R terraria:terraria "${MODS_DIR}"
 LogSuccess "Workshop mod installation complete"
