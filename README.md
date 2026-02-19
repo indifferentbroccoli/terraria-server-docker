@@ -131,24 +131,19 @@ Mods are persisted in `./terraria/mods` and updated on each container start. An 
 
 ## Sending commands to the server
 
-You can send any Terraria server console command to a running container using `docker exec`:
+Attach to the server console to type commands directly:
 
 ```bash
-docker exec terraria /home/terraria/server/command.sh "<command>"
+docker attach terraria
 ```
+
+Detach without stopping the server with `Ctrl+P` then `Ctrl+Q`.
 
 ### Examples
 
-```bash
-# Broadcast a message to all players
-docker exec terraria /home/terraria/server/command.sh "say Hello everyone!"
-
-# Kick a player
-docker exec terraria /home/terraria/server/command.sh "kick PlayerName"
-
-# Save the world
-docker exec terraria /home/terraria/server/command.sh "save"
-
-# Stop the server gracefully
-docker exec terraria /home/terraria/server/command.sh "exit"
+```
+say Hello everyone!
+kick PlayerName
+save
+exit
 ```

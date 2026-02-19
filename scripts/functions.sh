@@ -77,19 +77,7 @@ install() {
   LogSuccess "Terraria server installed successfully"
 }
 
-shutdown_gracefully() {
-  set +e
-  echo "Shutdown request received. Stopping Terraria server gracefully..."
 
-  if [[ -n "${SERVER_PID:-}" ]] && kill -0 "${SERVER_PID}" 2>/dev/null; then
-    timeout 10s bash -c 'echo "exit" >"$1"' _ "$FIFO_PATH" || true
-    wait "${SERVER_PID}"
-  fi
-
-  kill "${SLEEP_PID:-}" 2>/dev/null
-  echo "Terraria server has stopped"
-  exit 0
-}
 
 memory_check() {
   RAMAVAILABLE=$(awk '/MemAvailable/ {printf( "%d\n", $2 / 1024000 )}' /proc/meminfo)

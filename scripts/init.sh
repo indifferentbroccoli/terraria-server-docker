@@ -29,21 +29,4 @@ else
     install
 fi
 
-export FIFO_PATH=/tmp/terraria-stdin
-mkfifo "$FIFO_PATH"
-
-# Keep FIFO open so the server never receives EOF
-sleep infinity > "$FIFO_PATH" &
-export SLEEP_PID=$!
-
-# Start the server with the FIFO as stdin
-./start.sh < "$FIFO_PATH" &
-killpid=$!
-
-# Wait briefly for the server process to start, then capture its PID
-sleep 3
-export SERVER_PID=$(pgrep -f "TerrariaServer.bin.x86_64\|tModLoaderServer" 2>/dev/null | head -1 || echo "")
-
-trap 'shutdown_gracefully' SIGTERM SIGINT
-
-wait "$killpid"
+exec /home/terraria/server/start.sh

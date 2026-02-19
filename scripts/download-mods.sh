@@ -44,12 +44,14 @@ for MOD_ID in "${MOD_IDS[@]}"; do
 
     mod_path="${WORKSHOP_CONTENT}/${MOD_ID}"
     if [ -d "${mod_path}" ]; then
-        while IFS= read -r -d '' tmod_file; do
+        # Pick the newest .tmod file
+        tmod_file=$(find "${mod_path}" -name "*.tmod" | xargs ls -t 2>/dev/null | head -1)
+        if [ -n "${tmod_file}" ]; then
             cp -f "${tmod_file}" "${MODS_DIR}/"
             mod_name=$(basename "${tmod_file}" .tmod)
             enabled_mods+=("${mod_name}")
             LogSuccess "Mod ${mod_name} installed"
-        done < <(find "${mod_path}" -name "*.tmod" -print0)
+        fi
     else
         LogWarn "Could not find downloaded mod ${MOD_ID} at ${mod_path}"
     fi

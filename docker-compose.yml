@@ -12,5 +12,7 @@ services:
       PGID: 1000
     env_file:
       - .env.example
+    stdin_open: true
+    tty: true
     volumes:
       - ./terraria:/terraria
