@@ -24,10 +24,6 @@ Eat lag for breakfast
 
 ## How to use
 
-> [!IMPORTANT]
-> .env settings will override the current settings in `serverconfig.txt`
-> If you do not want that to happen, set `GENERATE_SETTINGS=false`
-
 Copy the `.env.example` file to a new file called `.env`. Then use either `docker compose` or `docker run`.
 
 ### Docker compose
@@ -46,7 +42,6 @@ services:
     environment:
       PUID: 1000
       PGID: 1000
-      GENERATE_SETTINGS: true
     env_file:
       - .env
     volumes:
@@ -69,7 +64,6 @@ docker run -d \
     -p 7777:7777/tcp \
     -e PUID=1000 \
     -e PGID=1000 \
-    -e GENERATE_SETTINGS=true \
     -e TERRARIA_VERSION=1450 \
     --env-file .env \
     -v ./terraria:/terraria \
@@ -84,7 +78,6 @@ docker run -d \
 |---------------------|----------|------------------------------------------|
 | `PUID`              | Required | User ID to run the server as             |
 | `PGID`              | Required | Group ID to run the server as            |
-| `GENERATE_SETTINGS` | `true`   | Generate settings from environment variables |
 | `TERRARIA_VERSION`  | `1450`   | Terraria version to download and install (e.g. `1450` for 1.4.5.0) |
 
 ### Server settings
@@ -110,8 +103,10 @@ docker run -d \
 
 tModLoader support is fully automated. Set `TMODLOADER_ENABLED=true` to download and run tModLoader instead of the vanilla server. When enabled, the vanilla Terraria install is skipped entirely — tModLoader is a standalone dedicated server.
 
-> [!IMPORTANT]
-> When switching between vanilla and tModLoader, clear your `./terraria` volume to avoid conflicts.
+> [!WARNING]
+> **The `./terraria` folder must be empty (or not exist) when first enabling tModLoader.**
+> tModLoader installs its own binaries and libraries (including `FNA.dll`) into `/terraria`. If the folder already contains a vanilla Terraria install, the wrong `FNA.dll` will be loaded and the server will crash.
+> Delete or clear `./terraria` before switching between vanilla and tModLoader.
 
 ### tModLoader settings
 

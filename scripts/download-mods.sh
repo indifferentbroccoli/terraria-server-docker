@@ -10,8 +10,16 @@ fi
 MODS_DIR="/terraria/mods"
 WORKSHOP_CONTENT="${HOME}/Steam/steamapps/workshop/content/1281930"
 ENABLED_JSON="${MODS_DIR}/enabled.json"
+WORKSHOP_MANIFEST="${MODS_DIR}/.workshop-mods"
 
 mkdir -p "${MODS_DIR}"
+
+# Remove only previously workshop downloaded mods so manually placed mods are preserved
+if [ -f "${WORKSHOP_MANIFEST}" ]; then
+    while IFS= read -r mod_name; do
+        rm -f "${MODS_DIR}/${mod_name}.tmod"
+    done < "${WORKSHOP_MANIFEST}"
+fi
 
 IFS=',' read -ra MOD_IDS <<< "${WORKSHOP_MODS}"
 
@@ -58,6 +66,9 @@ printf ']\n' >> "${ENABLED_JSON}"
 
 LogInfo "enabled.json written with ${#enabled_mods[@]} mod(s):"
 cat "${ENABLED_JSON}"
+
+# Save manifest for potential cleanup
+printf '%s\n' "${enabled_mods[@]}" > "${WORKSHOP_MANIFEST}"
 
 chown -R terraria:terraria "${MODS_DIR}"
 LogSuccess "Workshop mod installation complete"
