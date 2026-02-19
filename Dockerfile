@@ -11,6 +11,7 @@ RUN dpkg --add-architecture i386 && \
     libsdl2-2.0-0 \
     lib32gcc-s1 \
     libicu70 \
+    xvfb \
     ca-certificates \
     && wget -q -O /tmp/steamcmd.tar.gz https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
     && mkdir -p /usr/local/steamcmd \
