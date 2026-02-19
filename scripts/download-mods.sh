@@ -9,10 +9,13 @@ fi
 
 MODS_DIR="/terraria/mods"
 WORKSHOP_CONTENT="/root/Steam/steamapps/workshop/content/1281930"
+ENABLED_JSON="${MODS_DIR}/enabled.json"
 
 mkdir -p "${MODS_DIR}"
 
 IFS=',' read -ra MOD_IDS <<< "${WORKSHOP_MODS}"
+
+enabled_mods=()
 
 for MOD_ID in "${MOD_IDS[@]}"; do
     MOD_ID=$(echo "$MOD_ID" | tr -d ' ')
@@ -30,12 +33,31 @@ for MOD_ID in "${MOD_IDS[@]}"; do
 
     mod_path="${WORKSHOP_CONTENT}/${MOD_ID}"
     if [ -d "${mod_path}" ]; then
-        find "${mod_path}" -name "*.tmod" -exec cp -f {} "${MODS_DIR}/" \;
-        LogSuccess "Mod ${MOD_ID} installed"
+        while IFS= read -r -d '' tmod_file; do
+            cp -f "${tmod_file}" "${MODS_DIR}/"
+            mod_name=$(basename "${tmod_file}" .tmod)
+            enabled_mods+=("${mod_name}")
+            LogSuccess "Mod ${mod_name} installed"
+        done < <(find "${mod_path}" -name "*.tmod" -print0)
     else
         LogWarn "Could not find downloaded mod ${MOD_ID} at ${mod_path}"
     fi
 done
+
+# Write enabled.json so tModLoader actually loads the mods
+LogAction "Writing enabled.json"
+printf '[\n'  > "${ENABLED_JSON}"
+for i in "${!enabled_mods[@]}"; do
+    if [ $i -lt $(( ${#enabled_mods[@]} - 1 )) ]; then
+        printf '  "%s",\n' "${enabled_mods[$i]}" >> "${ENABLED_JSON}"
+    else
+        printf '  "%s"\n'  "${enabled_mods[$i]}" >> "${ENABLED_JSON}"
+    fi
+done
+printf ']\n' >> "${ENABLED_JSON}"
+
+LogInfo "enabled.json written with ${#enabled_mods[@]} mod(s):"
+cat "${ENABLED_JSON}"
 
 chown -R terraria:terraria "${MODS_DIR}"
 LogSuccess "Workshop mod installation complete"

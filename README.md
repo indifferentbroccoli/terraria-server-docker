@@ -132,7 +132,7 @@ WORKSHOP_MODS=2824688072,2835214226,1213059773
 The mod IDs can be found in the Steam Workshop URL:
 `https://steamcommunity.com/sharedfiles/filedetails/?id=`**`2824688072`**
 
-Mods are persisted in `./terraria/mods` and updated on each container start.
+Mods are persisted in `./terraria/mods` and updated on each container start. An `enabled.json` is automatically generated from your `WORKSHOP_MODS` list so tModLoader loads them without any manual configuration.
 
 ## Sending commands to the server
 
