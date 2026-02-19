@@ -29,4 +29,9 @@ else
     install
 fi
 
-exec /home/terraria/server/start.sh
+/home/terraria/server/start.sh &
+SERVER_PID=$!
+
+trap 'shutdown_gracefully' SIGTERM SIGINT
+
+wait $SERVER_PID

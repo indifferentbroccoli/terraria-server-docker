@@ -79,6 +79,19 @@ install() {
 
 
 
+shutdown_gracefully() {
+  set +e
+  echo "Shutdown request received. Stopping server gracefully..."
+
+  if [ -n "${SERVER_PID:-}" ] && kill -0 "${SERVER_PID}" 2>/dev/null; then
+    echo "exit" > /proc/${SERVER_PID}/fd/0
+    wait "${SERVER_PID}" 2>/dev/null
+  fi
+
+  echo "Server stopped"
+  exit 0
+}
+
 memory_check() {
   RAMAVAILABLE=$(awk '/MemAvailable/ {printf( "%d\n", $2 / 1024000 )}' /proc/meminfo)
   if [ "$RAMAVAILABLE" -lt "1" ]; then
