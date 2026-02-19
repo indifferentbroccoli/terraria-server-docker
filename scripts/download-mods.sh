@@ -27,7 +27,7 @@ for MOD_ID in "${MOD_IDS[@]}"; do
         +@NoPromptForPassword 1 \
         +login anonymous \
         +workshop_download_item 1281930 "${MOD_ID}" validate \
-        +quit; then
+        +quit > /dev/null 2>&1; then
         LogWarn "SteamCMD reported an error for mod ${MOD_ID}, continuing..."
     fi
 
