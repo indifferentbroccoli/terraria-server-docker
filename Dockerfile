@@ -30,7 +30,7 @@ RUN useradd -m -s /bin/bash terraria
 ENV HOME=/home/terraria \
     GAME_PORT=7777 \
     SERVER_IP=0.0.0.0 \
-    TERRARIA_VERSION=1450 \
+    TERRARIA_VERSION=1455 \
     TMODLOADER_ENABLED=false \
     TMODLOADER_VERSION=latest \
     WORKSHOP_MODS=

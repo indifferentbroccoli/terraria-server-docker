@@ -79,7 +79,7 @@ docker run -d \
 |---------------------|----------|------------------------------------------|
 | `PUID`              | `1000`   | User ID to run the server as             |
 | `PGID`              | `1000`   | Group ID to run the server as            |
-| `TERRARIA_VERSION`  | `1450`   | Terraria version to download and install (e.g. `1450` for 1.4.5.0) |
+| `TERRARIA_VERSION`  | `1455`   | Terraria version to download and install (e.g. `1455` for 1.4.5.5) |
 
 ### Server settings
 
