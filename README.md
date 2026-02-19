@@ -1,3 +1,4 @@
+![marketing_assets_banner](https://github.com/user-attachments/assets/b8b4ae5c-06bb-46a7-8d94-903a04595036)
 [![GitHub License](https://img.shields.io/github/license/indifferentbroccoli/terraria-server-docker?style=for-the-badge&color=6aa84f)](https://github.com/indifferentbroccoli/terraria-server-docker/blob/main/LICENSE)
 [![GitHub Release](https://img.shields.io/github/v/release/indifferentbroccoli/terraria-server-docker?style=for-the-badge&color=6aa84f)](https://github.com/indifferentbroccoli/terraria-server-docker/releases)
 [![GitHub Repo stars](https://img.shields.io/github/stars/indifferentbroccoli/terraria-server-docker?style=for-the-badge&color=6aa84f)](https://github.com/indifferentbroccoli/terraria-server-docker)
