@@ -27,7 +27,8 @@ LABEL maintainer="support@indifferentbroccoli.com" \
 
 RUN useradd -m -s /bin/bash terraria
 
-ENV HOME=/home/terraria \
+ENV GAME_ID=terraria \
+    HOME=/home/terraria \
     GAME_PORT=7777 \
     SERVER_IP=0.0.0.0 \
     TERRARIA_VERSION=1455 \
