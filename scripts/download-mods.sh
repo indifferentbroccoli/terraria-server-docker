@@ -19,7 +19,6 @@ fi
 
 if [ -z "${WORKSHOP_MODS:-}" ]; then
     LogInfo "No workshop mods specified, skipping mod download"
-    echo "[]" > "${ENABLED_JSON}"
     chown -R terraria:terraria "${MODS_DIR}"
     exit 0
 fi
