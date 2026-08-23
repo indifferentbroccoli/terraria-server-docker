@@ -65,7 +65,7 @@ docker run -d \
     -p 7777:7777/tcp \
     -e PUID=1000 \
     -e PGID=1000 \
-    -e TERRARIA_VERSION=1450 \
+    -e TERRARIA_VERSION=latest \
     --env-file .env \
     -v ./terraria:/terraria \
     indifferentbroccoli/terraria-server-docker
@@ -79,7 +79,7 @@ docker run -d \
 |---------------------|----------|------------------------------------------|
 | `PUID`              | `1000`   | User ID to run the server as             |
 | `PGID`              | `1000`   | Group ID to run the server as            |
-| `TERRARIA_VERSION`  | `1455`   | Terraria version to download and install (e.g. `1455` for 1.4.5.5) |
+| `TERRARIA_VERSION`  | `latest` | Terraria version to download and install (e.g. `1455` for 1.4.5.5). `latest` auto-resolves from terraria.org |
 
 ### Server settings
 

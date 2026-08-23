@@ -39,8 +39,35 @@ Log() {
   printf "$color%s$RESET$LINE" "$prefix$message$suffix"
 }
 
+resolve_latest_terraria_version() {
+  local names_url="https://terraria.org/api/get/dedicated-servers-names"
+  local version
+
+  version=$(curl -sf --max-time 30 "${names_url}" \
+    | grep -o 'terraria-server-[0-9]\+\.zip' \
+    | sed -E 's/terraria-server-([0-9]+)\.zip/\1/' \
+    | sort -V \
+    | tail -1)
+
+  if [ -z "${version}" ]; then
+    return 1
+  fi
+
+  echo "${version}"
+}
+
 install() {
   LogAction "Starting server install"
+
+  if [ "${TERRARIA_VERSION:-latest}" = "latest" ]; then
+    LogInfo "Fetching latest Terraria version..."
+    if ! TERRARIA_VERSION=$(resolve_latest_terraria_version); then
+      LogError "Failed to fetch latest Terraria version"
+      exit 1
+    fi
+    LogInfo "Resolved latest Terraria version: ${TERRARIA_VERSION}"
+  fi
+
   LogInfo "Installing Terraria version: ${TERRARIA_VERSION}"
 
   local download_url="https://terraria.org/api/download/pc-dedicated-server/terraria-server-${TERRARIA_VERSION}.zip"
