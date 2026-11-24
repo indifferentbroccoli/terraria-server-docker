@@ -50,7 +50,7 @@ RUN mkdir -p /terraria/worlds && \
 WORKDIR /home/terraria/server
 
 HEALTHCHECK --start-period=5m \
-            CMD pgrep -f "TerrariaServer\.bin\.x86_64\|dotnet" > /dev/null || exit 1
+            CMD ["pgrep", "-f", "TerrariaServer\\.bin\\.x86_64|dotnet"]
 
 EXPOSE 7777/tcp
 
